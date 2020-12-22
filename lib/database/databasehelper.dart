@@ -52,10 +52,7 @@ class DatabaseHelper {
         'birthday'],
         where: '$id = ?',
         whereArgs: [id]);
-    if (maps.length > 0) {
-      return MyFriends().fromMap(maps);
-    }
-    return null;
+    return MyFriends().fromMap(maps[(id - 1)]);
   }
 
   Future<int> insert(MyFriends myfriends) async {
@@ -77,12 +74,13 @@ class MyFriends {
 
   MyFriends();
 
-  Future<MyFriends> fromMap(List<Map> maps) {
-    print(maps);
-    //id = maps[id][0] as int;
-    //name = maps[id][1] as String;
-    //lastname = maps[id][2] as String;
-    //birthday = maps[id][3] as String;
+  MyFriends fromMap(Map<String, dynamic> maps) {
+    MyFriends newFriend = MyFriends();
+    newFriend.id = maps['id'];
+    newFriend.name = maps['name'];
+    newFriend.lastname = maps['lastname'];
+    newFriend.birthday = maps['birthday'];
+    return newFriend;
   }
 
   Map<String, dynamic> toMap() {
