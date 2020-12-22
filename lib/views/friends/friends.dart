@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mylife/Database/databasehelper.dart';
+
 import '../../main.dart';
 
 class Friends extends StatefulWidget {
@@ -62,6 +64,8 @@ class FriendsPage extends State<Friends> {
                   TextButton(
                     child: Text('Speichern'),
                     onPressed: () {
+                      _save();
+                      _read();
                       friendsName.add("${myController.text}");
                       Navigator.of(context).pop();
                       setState(() {});
@@ -77,5 +81,25 @@ class FriendsPage extends State<Friends> {
         backgroundColor: HexColor('AD6B07'),
       ),
     );
+  }
+  _save() async {
+    MyFriends newFriend = MyFriends();
+    newFriend.name = 'Testname';
+    newFriend.lastname = 'TestNachname';
+    newFriend.birthday = DateTime.now().toString();
+    DatabaseHelper helper = DatabaseHelper.instance;
+    int id = await helper.insert(newFriend);
+    print('inserted row: $id');
+  }
+
+  _read() async {
+    DatabaseHelper helper = DatabaseHelper.instance;
+    int rowId = 1;
+    MyFriends myfriends = await helper.queryMyFriends(rowId);
+    if (myfriends == null) {
+      print('read row $rowId: empty');
+    } else {
+      print('read row $rowId: ${myfriends.name} ${myfriends.lastname} ${myfriends.birthday}');
+    }
   }
 }

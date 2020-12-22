@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/DerMathes/AndroidStudioProjects/mylife/lib/views/home/homescreen.dart';
 import '../../main.dart';
 
 class Friendsmap extends StatelessWidget {
